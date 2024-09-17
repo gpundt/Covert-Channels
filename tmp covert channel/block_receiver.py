@@ -6,6 +6,9 @@
 import os
 from pathlib import Path
 
+
+# Function that listens for changes in /tmp
+# Once signal is detected, reads covert message
 def listen():
     print("[*] Listening for Sender Signal... [*]")
     signal_file = Path("/tmp/sender.signal")
@@ -14,6 +17,9 @@ def listen():
     print("[*] Signal Detected! Reading message... [*]")
     read_message()
 
+
+# Reads covert message, afterwards erases all files used in message
+# Makes signal file to indicate message has been read
 def read_message():
     os.remove("/tmp/sender.signal")
     search_dir = "/tmp/"
@@ -21,7 +27,6 @@ def read_message():
     files = filter(os.path.isfile, os.listdir(search_dir))
     files = [os.path.join(search_dir, f) for f in files]
     files.sort(key=lambda x: os.path.getmtime(x))
-
 
     message = ""
     for filename in files:
@@ -39,9 +44,11 @@ def read_message():
     make_signal_file()
 
 
+# Makes signal to sender indicating messgae has been read
 def make_signal_file():
     filename = "/tmp/receiver.signal"
     open(filename, "a").close()
+
 
 def main():
     listen()

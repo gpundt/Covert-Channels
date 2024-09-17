@@ -10,19 +10,19 @@ import random
 import time
 
 
+# wordlists used to create filenames and file contents
 char_list = string.ascii_letters + string.digits
 ascii_list = string.printable
-#print(char_list)
 
-# Gets message from user
+
+# Prompts user for message
 def input_message():
     plaintext = input("Enter message to send:\t")
-    # bianry_text = ' '.join(format(ord(x), 'b') for x in plaintext)
-    # print(bianry_text)
-    # return bianry_text
     return plaintext
 
 
+# Using user prompt, creates message files in /tmp
+# Once message has been sent, waits for receiver's signal
 def generate_message(message):
     print("\nMessage: '" + message + "'")
     for char in message:
@@ -34,12 +34,14 @@ def generate_message(message):
     print("[*] Message Received! [*]")
     
     
-
 # makes a file in /tmp to signal the receiver to begin reading
 def make_signal_file():
     filename = "/tmp/sender.signal"
     open(filename, "a").close()
 
+
+# Listens for receiver's signal, indicating message has been read
+# deletes signal file, removing existance of communication
 def listen():
     signal_file = Path("/tmp/receiver.signal")
     while signal_file.is_file() != True:
@@ -47,7 +49,7 @@ def listen():
     os.remove("/tmp/receiver.signal")
 
 
-# Creates files in /tmp that makes encoded message
+# Creates files in /tmp containing encoded message
 def make_file(letter):
     filename = "/tmp/text."
     for _ in range(10):
@@ -65,11 +67,9 @@ def make_file(letter):
     time.sleep(.1)
 
 
-
 def main():
     message = input_message()
     generate_message(message)
-
 
 
 if __name__ == "__main__":
