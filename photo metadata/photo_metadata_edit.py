@@ -69,6 +69,7 @@ def list_available_tags(tag_list):
 
 #####################
 ##### Mode == 2 #####
+#When mode 2 is selected, execute esit_exif
 def edit_exif(img : exif.Image):
     clear_terminal()
     empty_tags = []
@@ -90,10 +91,12 @@ def edit_exif(img : exif.Image):
         wait_for_input()
         start(img)
 
+# prompts user for message that will be embedded in photo metadata
 def get_user_message():
     message = input("\n[*] Prompting User Message [*]\nInput Message >>>\t")
     return message
 
+#encodes message in hex and prepends a hardcoded prefix
 def encode_message(message):
     prefix = "**&**$$474"
     print("[*] Message Prefix: " + prefix + " [*]\n")
@@ -103,6 +106,7 @@ def encode_message(message):
     print("[*] Encoded Message with Prefix [*]\n", encoded)
     return encoded
     
+# changes metadata to contain encoded message
 def inject_encoded_message(img : exif.Image, encoded, tag_to_modify):
     wait_for_input()
     img.set(tag_to_modify, encoded)
@@ -110,6 +114,7 @@ def inject_encoded_message(img : exif.Image, encoded, tag_to_modify):
     #img.set(str(tag_to_modify).strip(), encoded)
    # print("[*] Encoded Message Injected! [*]")
 
+# overwrites changes to original photo
 def save_changes(img):
     print("[*] Saving Changes! [*]\n\n")
     with open(filepath, "wb") as image:
@@ -117,6 +122,7 @@ def save_changes(img):
     print("[*] Changes Saved! [*]")
     wait_for_input()
 
+# Prompts user to select which metadata tag they want to embed message
 def select_empty_tag(tag_list):
     print("\n[*] Select Tag to Modify [*]")
     number = 1
@@ -143,23 +149,27 @@ def select_empty_tag(tag_list):
 
 #########################
 ### Utility Functions ###
+# Prompts user for which mode they want
 def select_mode():
     clear_terminal()
     mode = input("1) Read Exif\n2) Edit Metadata\n3) Quit\n>>>\t")
     return mode
 
+# exits program
 def exit_program():
     clear_terminal()
     print("Goodbye!")
     time.sleep(2)
     clear_terminal()
 
+# prompts user before continuing
 def wait_for_input():
     input("\n\n[*] Press ENTER to Continue... [*]\n")
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# executes program start sequence
 def start(img : exif.Image):
     clear_terminal()
     print("[*] Photo Metadata Edit Tool [*]")

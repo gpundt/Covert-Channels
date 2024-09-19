@@ -71,21 +71,25 @@ def list_available_tags(tag_list):
 
 #####################
 ##### Mode == 2 #####
+# If mode 2 is slected, searches file for encoded messages and decodes them
 def decode_message():
     exif_tags = dir(img)
     for tag in exif_tags:
         data = img.get(tag)
         if "**&**$$474" in str(data) and str(data) not in encoded_messages:
             encoded_messages.append(str(data))
-    print("\n[*] Displaying Encoded Messages [*]")
-    for message in encoded_messages:
-        print("Message:\t", message)
-        message = message[10:]
-        decoded = bytes.fromhex(message).decode("utf-8")
-        print("Decoded Message:\t", decoded)
-        print("\n")
+    if len(encoded_messages) < 1:
+        print("[*] No Encoded Messages Detected [*]")
+        wait_for_input()
+    else:
+        print("\n[*] Displaying Encoded Messages [*]")
+        for message in encoded_messages:
+            print("Message:\t", message)
+            message = message[10:]
+            decoded = bytes.fromhex(message).decode("utf-8")
+            print("Decoded Message:\t", decoded)
+            print("\n")
     wait_for_input()
-
 ##### Mode == 2 #####
 #####################
 
