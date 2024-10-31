@@ -1,0 +1,5 @@
+--upgrade selenium
+--upgrade urllib3
+pyautogui
+emoji
+clipboard
