@@ -3,3 +3,6 @@
 pyautogui
 emoji
 clipboard
+bianscii
+random
+numpy
