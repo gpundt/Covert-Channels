@@ -138,10 +138,10 @@ class PostReceiver:
 
         try:
             # Find elements that link to the target user's posts using XPath
-            self.posts = self.driver.find_elements(by=By.XPATH, value="//a[contains(@href, '/{}/p/')]".format(self.username))
+            self.posts = self.driver.find_elements(by=By.XPATH, value="//a[contains(@href, '/{}/p/')]".format(self.account))
         except Exception as e:    
             # Debugging purposes (shows the XPath search string)
-            print("Search Value: " + "//a[contains(@href, '/{}/p/')]".format(self.username))
+            print("Search Value: " + "//a[contains(@href, '/{}/p/')]".format(self.account))
 
             print(f"Error obtaining posts: {e}")
             raise  # Re-raise the exception for further handling
